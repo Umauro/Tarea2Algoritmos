@@ -7,6 +7,7 @@ void mergeAcciones(int *bolsa, int izquierda, int derecha, int *maximo){
         maximo[0] = izquierda;
         maximo[1] = derecha;
         maximo[2] = bolsa[izquierda];
+        printf("%i %i %i\n", maximo[0], maximo[1], maximo[2]);
         return;
     }
 
@@ -29,8 +30,13 @@ void mergeAcciones(int *bolsa, int izquierda, int derecha, int *maximo){
     int i;
     for(i = parteizquierda[1] +1; i <= partederecha[0]; i++){
         temp[1] = i;
-        temp[2] += bolsa[i];
-        if(temp[2] > maximo[2]){
+        if(i == partederecha[0]){
+            temp[2] += partederecha[2];
+        }
+        else{
+            temp[2] += bolsa[i];
+        }
+        if(temp[2] >= maximo[2]){
                 maximo[0] = temp[0];
                 maximo[1] = temp[1];
                 maximo[2] = temp[2];
