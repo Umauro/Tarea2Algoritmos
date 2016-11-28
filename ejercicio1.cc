@@ -7,7 +7,6 @@ void mergeAcciones(int *bolsa, int izquierda, int derecha, int *maximo){
         maximo[0] = izquierda;
         maximo[1] = derecha;
         maximo[2] = bolsa[izquierda];
-        printf("%i %i %i\n", maximo[0], maximo[1], maximo[2]);
         return;
     }
 
