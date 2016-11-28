@@ -28,11 +28,12 @@ void mergeAcciones(int *bolsa, int izquierda, int derecha, int *maximo){
     }
     int i;
     for(i = parteizquierda[1] +1; i <= partederecha[0]; i++){
-        temp[1] = i;
         if(i == partederecha[0]){
+            temp[1] = partederecha[1];
             temp[2] += partederecha[2];
         }
         else{
+            temp[1] = i;
             temp[2] += bolsa[i];
         }
         if(temp[2] >= maximo[2]){
