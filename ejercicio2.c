@@ -1,11 +1,14 @@
 #include <string.h>
 #include <stdio.h>
 #include <stdlib.h>
+/** Variable global **/
 
 
-int arbolOptimo(int, int*);
 
-int arbolOptimo(int numero, int * arregloProba){
+
+float matriz[101][101];
+
+float arbolOptimo(int numero, float * arregloProba){
 	/** Variables **/
 	
 	int i;
@@ -13,56 +16,73 @@ int arbolOptimo(int numero, int * arregloProba){
 	int j;
 	int k;
 	int s;
-	int valorMinimo;
-	int suma;
+	int row, columna;
+	float valorMinimo;
+	float suma;
 	int numeroUtil = numero - 1;
-
-	/** Creación de matriz para utilizar el algoritmo **/
-	int** matriz;
-	matriz = (int **)malloc(sizeof(int *)*(numero));
-	for(i=0;i < numero; i++){
-		matriz[i] = (int *)malloc(sizeof(int)*(numero));
-	}
-
 	
-	/**Empieza el algoritmo**/
-	for(i = 0; i < numeroUtil; i++){
-		matriz[i][i] = 0;
+	/**Empieza el algoritmo con los caso de borde**/
+
+	for(i = 1; i <= numero; i++){
+		matriz[i-1][i-1] = 0;
 		
-		matriz[i][i+1] = arregloProba[i];
+		matriz[i-1][i] = arregloProba[i-1];
 	}
 	
-	matriz[numeroUtil][numeroUtil] = 0;
+	matriz[numero][numero] = 0;
 
-
-	for(d = 0; d < numeroUtil; d++){
-		for(i = 0; i < numero-d; i++){
+	
+	/**
+	for(d = 1; d <= numeroUtil; d++){
+		
+		for(i = 1; i <= numero - d; i++){
+			
 			j = i + d;
+			
 			valorMinimo = 1000000;
-			for(k = i; k < j ; k++){
-				if(matriz[i][k-1] + matriz[k+1][j] < valorMinimo){
-					valorMinimo = matriz[i][k-1] + matriz[k+1][j];
-					printf("Valor minimo: %d\n", valorMinimo);
+
+			for(k = i; k <= j ; k++){
+				//printf("i - 1: %d\n  k - 1 : %d\n  k: %d\n  j:  %d\n",i-1,k-1,k,j);
+				if(matriz[i-1][k-1] + matriz[k][j] < valorMinimo){
+			
+					valorMinimo = matriz[i-1][k-1] + matriz[k][j];
+		
 
 				}
 			}
-			suma = arregloProba[i];
-			for(s = i+1; s < j+1; s++){
-				suma += arregloProba[s];
+			suma = arregloProba[i-1];
+
+			for(s = i; s <= j; s++){
+				suma += arregloProba[s-1];
+				//printf("%f\n", suma);
 			}
-			matriz[i][j] = valorMinimo + suma;
+			
+			matriz[i-1][j] = valorMinimo + suma;
+		
+			printf("\nAcá va la matriz \n");
+			for(row = 0; row < 5; row++){
+				for(columna = 0; columna<5; columna++){
+					printf("%f     ", matriz[row][columna]);
+    
+				}
+			printf("\n");	
+			}
+			
 		}
+	**/
 
 	}
+
 	return matriz[0][numeroUtil];
 }
 
 int main(){
-	int array[3];
-	array[0] = 0.33;
-	array[1] = 0.34;
-	array[2] = 0.33;
-	int resultado = arbolOptimo(4, array);
-	printf("%d\n",resultado);
+	float array[4];
+	array[0] = 0.1;
+	array[1] = 0.2;
+	array[2] = 0.4;
+	array[3] = 0.3;
+	float resultado = arbolOptimo(5, array);
+	printf("%.4f\n",resultado);
 	return 0;
 }
